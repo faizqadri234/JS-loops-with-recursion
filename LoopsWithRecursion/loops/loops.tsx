@@ -40,7 +40,7 @@ export const filter = (array: any, iterationCallBack: (item: any, index: number)
     const startLoop = () => {
         if (iterator < array.length) {
             const decider = iterationCallBack?.(array[iterator], iterator)
-            if(decider) {
+            if (decider) {
                 filteredContent.push(array[iterator])
             }
             iterator = iterator + 1
@@ -58,7 +58,7 @@ export const find = (array: any, iterationCallBack: (item: any, index: number) =
     const startLoop = () => {
         if (iterator < array.length) {
             const decider = iterationCallBack?.(array[iterator], iterator)
-            if(decider) {
+            if (decider) {
                 desiredItem = array[iterator]
                 return
             }
@@ -70,14 +70,14 @@ export const find = (array: any, iterationCallBack: (item: any, index: number) =
     return desiredItem
 }
 
-export const some = (array: any, iterationCallBack: (item: any, index: number) => any) : boolean => {
+export const some = (array: any, iterationCallBack: (item: any, index: number) => any): boolean => {
     let iterator = 0
     let existence: boolean = false
     if (array.length < 1) return false
     const startLoop = () => {
         if (iterator < array.length) {
             existence = iterationCallBack?.(array[iterator], iterator)
-            if(existence) {
+            if (existence) {
                 return
             }
             iterator = iterator + 1
@@ -86,4 +86,76 @@ export const some = (array: any, iterationCallBack: (item: any, index: number) =
     }
     startLoop()
     return existence
+}
+
+export const indexOf = (array: any, itemToFind: any, startFrom: number = 0): number => {
+    let iterator = startFrom
+    let index: number = -1
+    if (array.length < 1) return index
+    const startLoop = () => {
+        if (iterator < array.length) {
+            if (array[iterator] === itemToFind) {
+                index = iterator
+                return
+            }
+            iterator = iterator + 1
+            startLoop()
+        }
+    }
+    startLoop()
+    return index
+}
+
+export const findIndex = (array: any, iterationCallBack: (item: any, index: number) => any): number => {
+    let iterator = 0
+    let index: number = -1
+    if (array.length < 1) return index
+    const startLoop = () => {
+        if (iterator < array.length) {
+            const existence = iterationCallBack?.(array[iterator], iterator)
+            if (existence) {
+                index = iterator
+                return
+            }
+            iterator = iterator + 1
+            startLoop()
+        }
+    }
+    startLoop()
+    return index
+}
+
+export const includes = (array: any, itemToFind: any, startFrom: number = 0): boolean => {
+    let iterator = startFrom
+    let existence: boolean = false
+    if (array.length < 1) return existence
+    const startLoop = () => {
+        if (iterator < array.length) {
+            if (array[iterator] === itemToFind) {
+                existence = true
+                return
+            }
+            iterator = iterator + 1
+            startLoop()
+        }
+    }
+    startLoop()
+    return existence
+}
+
+export const slice = (array: any[], startIndex: number, endIndex: number): any[] => {
+    let iterator = 0
+    const slicedArray: any[] = []
+    if (array.length < 1) return array
+    const startLoop = () => {
+        if (iterator < array.length) {
+            if (iterator >= startIndex && iterator < endIndex) {
+                slicedArray.push(array[iterator])
+            }
+            iterator = iterator + 1
+            startLoop()
+        }
+    }
+    startLoop()
+    return slicedArray
 }
